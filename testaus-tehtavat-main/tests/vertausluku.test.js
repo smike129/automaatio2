@@ -53,8 +53,8 @@ describe("laskeVertausluvut", () => {
       const tulos = laskeVertausluvut(ehdokasRekisteri.haeLista(1));
       const samatAanet = tulos.filter((ehdokas) => ehdokas.aanet === 2);
       assert.equal(samatAanet.length, 3);
-      assert.equal(samatAanet[0].arvottu, false); // Ensimmäinen ei ole arvottu
-      assert.equal(samatAanet[1].arvottu, true); // Muut ovat arvottuja
+      assert.equal(samatAanet[0].arvottu, false); 
+      assert.equal(samatAanet[1].arvottu, true); 
       assert.equal(samatAanet[2].arvottu, true);
     });
 
@@ -63,6 +63,20 @@ describe("laskeVertausluvut", () => {
       const samatAanet = tulos.filter((ehdokas) => ehdokas.aanet === 2);
       assert.notEqual(samatAanet[0].vertausluku, samatAanet[1].vertausluku);
       assert.notEqual(samatAanet[1].vertausluku, samatAanet[2].vertausluku);
+    });
+
+    it("arvotuilla ehdokkailla on oikea järjestys", () => {
+      const tulos = laskeVertausluvut(ehdokasRekisteri.haeLista(1));
+      const samatAanet = tulos.filter((ehdokas) => ehdokas.aanet === 2);
+
+      assert.equal(samatAanet[0].arvottu, false); 
+      assert.equal(samatAanet[1].arvottu, true); 
+      assert.equal(samatAanet[2].arvottu, true);
+
+      assert.ok(
+        samatAanet[1].vertausluku < samatAanet[2].vertausluku,
+        "Järjestys on väärä"
+      );
     });
   });
 });
